@@ -35,12 +35,13 @@ class CustomTextFormField extends StatelessWidget {
           hintText: hintText,
           errorText: errorText,
           hintStyle: TextStyle(
-              color: C_BODY_TEXT_COLOR,
+              color: C_INPUT_BOLDER_COLOR,
               fontSize: 14.0,
               fontWeight: FontWeight.w600),
           fillColor: C_INPUT_BG_COLOR,
           filled: true,
           border: baseBorder,
+          enabledBorder: baseBorder,
           focusedBorder: baseBorder.copyWith(
               borderSide: baseBorder.borderSide.copyWith(
             color: C_PRIMARY_COLOR,
