@@ -49,10 +49,11 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: C_PEACH_LIGHT,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey,
-        selectedFontSize: 10,
-        unselectedFontSize: 10,
+        selectedFontSize: 14,
+        unselectedFontSize: 14,
         type: BottomNavigationBarType.fixed,
         onTap: (int index) {
           controller.animateTo(index);
@@ -60,19 +61,19 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
         currentIndex: index,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.home_filled),
             label: '홈',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book),
+            icon: Icon(Icons.book),
             label: '숙제',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.people_outline),
+            icon: Icon(Icons.people),
             label: '가족',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon: Icon(Icons.person),
             label: '프로필',
           ),
         ],

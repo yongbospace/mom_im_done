@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final dio = Dio();
 
     return DefaultLayout(
-      backgroundColor: C_PRIMARY_COLOR,
+      backgroundColor: C_NAVY_REGULAR,
       child: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: SafeArea(
@@ -58,11 +58,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 16.0),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: C_INPUT_BOLDER_COLOR,
+                    backgroundColor: C_NAVY_DARK,
+                    padding: EdgeInsets.symmetric(vertical: 12),
                   ),
                   onPressed: () async {
                     final rawString = '$username:$password';
-                    print(rawString);
                     Codec<String, String> stringToBase64 = utf8.fuse(base64);
                     String token = stringToBase64.encode(rawString);
 
@@ -88,12 +88,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                     print(resp.data);
                   },
-                  child: Text('로그인'),
+                  child: Text(
+                    '로그인',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
                 TextButton(
-                  style: TextButton.styleFrom(foregroundColor: Colors.white),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                  ),
                   onPressed: () {},
-                  child: Text('회원가입'),
+                  child: Text(
+                    '회원가입',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ],
             ),

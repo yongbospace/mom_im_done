@@ -1,50 +1,48 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mom_im_done/common/const/data.dart';
+import 'package:mom_im_done/common/dio/dio.dart';
 import 'package:mom_im_done/homework/component/homework_card.dart';
+import 'package:mom_im_done/homework/model/homework_model.dart';
+import 'package:mom_im_done/homework/repository/homework_repository.dart';
 
 class HomeworkScreen extends StatelessWidget {
   const HomeworkScreen({super.key});
 
-  Future<List> paginateHomework() async {
+  Future<List<HomeworkModel>> paginateHomework() async {
     final dio = Dio();
-
-    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
-
-    final resp = await dio.get('http://$ip:3000/homeworks',
-        queryParameters: {'take': 5},
-        options: Options(headers: {'authorization': 'Bearer $accessToken'}));
-    return resp.data['data'];
+    dio.interceptors.add(
+      CustomInterceptor(storage: storage),
+    );
+    final resp =
+        await HomeworkRepository(dio, baseUrl: 'http://$ip:3000/homeworks')
+            .paginate();
+    return resp.data;
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: FutureBuilder<List>(
-          builder: (context, AsyncSnapshot<List> snapshot) {
+        child: FutureBuilder<List<HomeworkModel>>(
+          future: paginateHomework(),
+          builder: (context, AsyncSnapshot<List<HomeworkModel>> snapshot) {
             if (!snapshot.hasData) {
-              return Container();
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
             return ListView.separated(
               itemCount: snapshot.data!.length,
               itemBuilder: (_, index) {
-                final item = snapshot.data![index];
-                return HomeworkCard(
-                  title: item['title'],
-                  range: item['range'],
-                  dueDate: item['dueDate'],
-                  author: item['author']['nickname'],
-                  child: item['child']['nickname'],
-                  isDone: item['isDone'],
-                );
+                final pItem = snapshot.data![index];
+                return HomeworkCard.fromModel(model: pItem);
               },
               separatorBuilder: (_, index) {
                 return SizedBox(height: 8);
               },
             );
           },
-          future: paginateHomework(),
         ));
   }
 }

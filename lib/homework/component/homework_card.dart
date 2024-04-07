@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mom_im_done/common/const/colors.dart';
+import 'package:mom_im_done/homework/model/homework_model.dart';
 
 class HomeworkCard extends StatelessWidget {
   final String title;
   final String range;
   final String dueDate;
-  final String author;
-  final String child;
+  final Map<String, dynamic> author;
+  final Map<String, dynamic> child;
   final bool isDone;
 
   const HomeworkCard({
@@ -19,12 +20,25 @@ class HomeworkCard extends StatelessWidget {
     super.key,
   });
 
+  factory HomeworkCard.fromModel({
+    required HomeworkModel model,
+  }) {
+    return HomeworkCard(
+      title: model.title,
+      range: model.range,
+      dueDate: model.dueDate,
+      author: model.author,
+      child: model.child,
+      isDone: model.isDone,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4.0),
-        color: Colors.grey[isDone ? 300 : 50],
+        color: isDone ? C_PEACH_LIGHT : Colors.white,
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -36,7 +50,7 @@ class HomeworkCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w800),
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 8),
                 Row(
@@ -70,14 +84,14 @@ class _IconText extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: C_BODY_TEXT_COLOR,
+          color: C_GREY,
           size: 20.0,
         ),
         SizedBox(width: 4),
         Text(
           text,
           style: TextStyle(
-            color: C_BODY_TEXT_COLOR,
+            color: C_GREY,
             fontSize: 18.0,
           ),
         ),
